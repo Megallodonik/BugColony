@@ -1,19 +1,8 @@
 using System;
 using UnityEngine;
+using Zenject;
 
-public class Mushroom : MonoBehaviour, IResource
+public class Mushroom : Resource
 {
-    public event Action<IResource> OnPickingUp;
-    private ResourceScriptableObject _resourceData;
 
-    public ResourceScriptableObject ResourceData => _resourceData;
-
-    public void SetResourceData(ResourceScriptableObject resourceData)
-    {
-        _resourceData = resourceData;
-    }
-    public void PickUp()
-    {
-        OnPickingUp?.Invoke(this);
-    }
 }

@@ -56,7 +56,7 @@ public class SimpleObjectPool
         }
         else
         {
-            Debug.LogError($"Object pool is empty or null! Failed to create {_prefab}");
+            Debug.LogWarning($"Object pool is empty or null! Failed to create {_prefab}");
             return null;
         }
     }

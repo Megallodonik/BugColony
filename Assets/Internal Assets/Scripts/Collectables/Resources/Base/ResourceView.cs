@@ -5,11 +5,11 @@ public class ResourceView : MonoBehaviour
     [SerializeField] private Sprite _mainSprite;
 
     private SpriteRenderer _spriteRenderer;
-    private IResource _model;
+    private Resource _model;
 
     private void Awake()
     {
-        _model = this.GetComponent<IResource>();
+        _model = this.GetComponent<Resource>();
         if ( _model == null)
         {
             Debug.LogError($"{this.name} is not settuped! No IResource attached!");
@@ -20,6 +20,6 @@ public class ResourceView : MonoBehaviour
         {
             Debug.LogError($"{this.name} is not settuped! No sprite renderer attached!");
         }
-
+        //_spriteRenderer.sprite = _mainSprite;
     }
 }

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ResourcesConfig
   m_EditorClassIdentifier: Assembly-CSharp::ResourcesConfigScriptableObject
   _resources:
-  - _resourceView: {fileID: 0}
+  - _resourceView: {fileID: 5825565058884840457, guid: e3c2f3b1e2d9f274b99566211b1c5450, type: 3}
     _resourceData: {fileID: 11400000, guid: 140fac757a2dbd444bca6bc85345fd0b, type: 2}
+    _resourceAppearenceWeight: 100
+    _maxResourcesOnScene: 5
