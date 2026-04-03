@@ -12,7 +12,7 @@ public class ResourceSpawnerService
     private GameWorldConfigScriptableObject _gameWorldConfig;
 
     private ResourcesConfigScriptableObject _resourcesConfig;
-    private Dictionary<string, SimpleObjectPool> _resourcePools;
+    private Dictionary<string, SimpleObjectPool> _resourcePools; // resource id => resource object pool
 
     public event Action<Vector2> OnResourceSpawned;
     private CancellationTokenSource _spawnLoopCts;
@@ -40,13 +40,14 @@ public class ResourceSpawnerService
                 Debug.LogError($"One of resources does not contain IResource: {resource.ResourceData.ID}");
                 continue;
             }
-            objPool.CreatePool(resource.ResourceView.gameObject, resource.MaxResourcesOnscene, false);
+            objPool.CreatePool(resource.ResourceView.gameObject, resource.MaxResourcesOnscene, true);
             _resourcePools.Add(id, objPool);
         }
         _isReady = true;
     }
     public void StartSpawnLoop()
     {
+        if (!_isReady) return;
         _spawnLoopCts?.Cancel();
         _spawnLoopCts?.Dispose();
         _spawnLoopCts = new CancellationTokenSource();

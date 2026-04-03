@@ -5,7 +5,7 @@ using Zenject;
 
 public class Resource : MonoBehaviour, ICollectable
 {
-    public event Action<Resource> OnPickingUp;
+    public event Action OnPickingUp;
     private ResourceScriptableObject _resourceData;
 
     [Inject] ResourceSpawnerService _resourceService;
@@ -16,14 +16,19 @@ public class Resource : MonoBehaviour, ICollectable
     {
         _resourceData = resourceData;
     }
-    public void PickUp()
+    public void Interact()
     {
-        if (_resourceService == null)
+        PickUp();
+    }
+    public virtual void PickUp()
+    {
+        if (_resourceData == null)
         {
             Debug.LogError($"Resource data is not attached! {this.name}");
             return;
         }
-        OnPickingUp?.Invoke(this);
+        OnPickingUp?.Invoke();
         _resourceService.ReturnResource(this);
     }
+
 }
