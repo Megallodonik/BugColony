@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class TestBug : BugBase
 {
-    [SerializeField] private BugBaseConfigScriptableObject _config;
+    [SerializeField] private BugBaseConfigScriptableObject _bugConfig;
 
     private void Start()
     {
-        Init(_config);
+        Init(_bugConfig);
         
     }
     public void StartGame()
     {
-        StartChase(_config.SeekForTargetRepetative);
+        StartChase(_bugConfig.SeekForTargetRepetative);
     }
     private void Update()
     {

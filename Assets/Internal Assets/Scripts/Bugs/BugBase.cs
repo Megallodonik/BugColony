@@ -77,20 +77,19 @@ public abstract class BugBase: MonoBehaviour, IDamageble
     public void StartChase(bool repetative)
     {
         _followRepetative = repetative;
-        var target = FindClosestTarget(_config.TargetFollowType); 
-        if (_moveComponent == null)
+        var target = FindClosestTarget(_config.TargetFollowType);
+        if (_moveComponent != null && target != null)
         {
-            Debug.LogError($"No move component attached to {this.name}");
-            return;
+            _moveComponent.StartFollowing(target, _config.Speed, _config.ReachingThreshold);
         }
-        _moveComponent.StartFollowing(target, _config.Speed, _config.ReachingThreshold);
     }
 
 
     private Transform FindClosestTarget(Type targetType)
     {
+        if (targetType == null) return null;
         var results = Physics2D.OverlapCircleAll(transform.position, _config.DetectionRadius, _config.TargetLayer);
-        Collider2D closest = null;
+        Transform closest = null;
         float minDistSq = float.MaxValue;
 
         for (int i = 0; i < results.Length; i++)
@@ -102,10 +101,10 @@ public abstract class BugBase: MonoBehaviour, IDamageble
             if (distSq < minDistSq)
             {
                 minDistSq = distSq;
-                closest = target;
+                closest = target.transform;
             }
         }
-        return closest.transform;
+        return closest;
     }
     private void OnDrawGizmosSelected()
     {

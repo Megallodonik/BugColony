@@ -16,7 +16,7 @@ public class MoveComponent : MonoBehaviour
     {
         if (speed <= 0 || target == null || reachingThreshold < 0)
         {
-            Debug.LogError($"Trying to follow target with incorrect data!");
+            Debug.LogError($"Trying to follow target with incorrect data! (No targets available)");
             return;
         }
         StopFollowing();
