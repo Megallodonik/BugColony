@@ -8,23 +8,39 @@ using UnityEngine;
 public class BugBaseConfigScriptableObject : ScriptableObject
 {
     //[SerializeReference] private IBugAction _bugAction; <= very good solution, but requires Odin Inspector or difficult custom editor classes
+    //public IBugAction BugAction => _bugAction;
+
     [SerializeField] private List<BugActionConfigBaseScriptableObject> _bugActions;
     [SerializeField] private bool _doActionsOnReaching = true;
+
     [SerializeField] private LayerMask _targetLayer;
     [SerializeField, Range(0, 999999)] private float _detectionRadius;
+
+    [SerializeField, Range(0, 999999)] private int _health;
+
     [SerializeField, Range(0, 999999)] private float _speed;
     [SerializeField, Range(0, 999999)] private float _reachingThreshold;
     [SerializeField] private bool _seekForTargetRepetative = true;
 
-    //public IBugAction BugAction => _bugAction;
+    [SerializeField, Range(0, 999999), Tooltip("the delay after which the bug will begin to move when it appears")] private int _appearenceDelayInSeconds;
+
+    [SerializeField] private bool _separateOnlyInSelfSimilar = false;
+
+    [SerializeField] private string _id;
 
     public List<BugActionConfigBaseScriptableObject> BugActions => _bugActions;
     public bool DoActionsOnReaching => _doActionsOnReaching;
     public LayerMask TargetLayer => _targetLayer;
     public float DetectionRadius => _detectionRadius;
+    public int Health => _health;
     public float Speed => _speed;
     public float ReachingThreshold => _reachingThreshold;
     public bool SeekForTargetRepetative => _seekForTargetRepetative;
+
+    public int AppearenceDelayInSeconds => _appearenceDelayInSeconds;
+
+    public bool SeparateOnlyInSelfSimilar => _separateOnlyInSelfSimilar;
+    public string ID => _id;
 
     private string _typeName;
 
@@ -50,31 +66,4 @@ public class BugBaseConfigScriptableObject : ScriptableObject
             return _cachedType;
         }
     }
-#if UNITY_EDITOR
-    [CustomEditor(typeof(BugBaseConfigScriptableObject))]
-    public class TargetTypeSOEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
-
-            var so = (BugBaseConfigScriptableObject)target;
-
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => typeof(IEntity).IsAssignableFrom(t))
-                .ToArray();
-
-            int currentIndex = Array.FindIndex(types, t => t.AssemblyQualifiedName == so.TypeName);
-            int newIndex = EditorGUILayout.Popup("Target Type", currentIndex, types.Select(t => t.Name).ToArray());
-
-            if (newIndex >= 0 && newIndex != currentIndex)
-            {
-                so.GetType().GetField("_typeName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                    .SetValue(so, types[newIndex].AssemblyQualifiedName);
-                EditorUtility.SetDirty(so);
-            }
-        }
-    }
-#endif
 }

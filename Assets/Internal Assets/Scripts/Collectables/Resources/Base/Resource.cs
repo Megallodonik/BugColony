@@ -20,6 +20,7 @@ public class Resource : MonoBehaviour, ICollectable
     {
         PickUp();
     }
+
     public virtual void PickUp()
     {
         if (_resourceData == null)

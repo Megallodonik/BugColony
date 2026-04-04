@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf966b4a1d59c14cb2550eb0e46dc96, type: 3}
+  m_Name: TestBugConfig1
+  m_EditorClassIdentifier: Assembly-CSharp::WorkerBugConfigScriptableObject
+  _bugActions:
+  - {fileID: 11400000, guid: 0437344a0539bb644b379bf0ee82898a, type: 2}
+  _doActionsOnReaching: 1
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _detectionRadius: 100
+  _health: 0
+  _speed: 4
+  _reachingThreshold: 0
+  _seekForTargetRepetative: 1
+  _appearenceDelayInSeconds: 1
+  _id: test_bug
+  _saturationForSeparation: 10

@@ -15,7 +15,7 @@ public class EatResourceBugAction : IBugAction
     private void EatResource()
     {
         var resource = _entity as Resource;
-        if (resource != null)
+        if (resource != null && resource.isActiveAndEnabled)
         {
             resource.PickUp();
             var amount = resource.ResourceData.NutrinionalValue;

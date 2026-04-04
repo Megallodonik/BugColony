@@ -8,5 +8,7 @@ public class ServiceInstaller : MonoInstaller
     {
         Container.Bind<GameWorldService>().AsSingle();
         Container.Bind<ResourceSpawnerService>().AsSingle();
+        Container.Bind<ColonyStats>().AsSingle();
+        Container.Bind<BugSpawnerService>().AsSingle();
     }
 }

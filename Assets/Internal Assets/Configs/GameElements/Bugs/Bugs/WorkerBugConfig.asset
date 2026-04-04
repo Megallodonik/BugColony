@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36dbec41c99977a41b3fbcec72b660bd, type: 3}
-  m_Name: BugBaseConfig
-  m_EditorClassIdentifier: Assembly-CSharp::BugBaseConfigScriptableObject
+  m_Script: {fileID: 11500000, guid: 8bf966b4a1d59c14cb2550eb0e46dc96, type: 3}
+  m_Name: WorkerBugConfig
+  m_EditorClassIdentifier: Assembly-CSharp::WorkerBugConfigScriptableObject
   _bugActions:
   - {fileID: 11400000, guid: 0437344a0539bb644b379bf0ee82898a, type: 2}
   _doActionsOnReaching: 1
@@ -19,6 +19,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   _detectionRadius: 100
-  _speed: 2
+  _health: 10
+  _speed: 5
   _reachingThreshold: 0
   _seekForTargetRepetative: 1
+  _appearenceDelayInSeconds: 1
+  _id: worker_bug
+  _saturationForSeparation: 10

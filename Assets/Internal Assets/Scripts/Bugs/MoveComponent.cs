@@ -6,6 +6,7 @@ using UnityEngine;
 public class MoveComponent : MonoBehaviour 
 {
     public event Action<Transform> OnTargetReached;
+    public event Action OnTargetLost;
     private Transform _target;
     private float _speed = 5f;
     private float _reachingThreshold = 0.01f;
@@ -41,14 +42,21 @@ public class MoveComponent : MonoBehaviour
     {
         try
         {
-            while (!token.IsCancellationRequested && _target != null)
+            while (!token.IsCancellationRequested)
             {
-                float distance = Vector2.Distance(transform.position, _target.position);
 
+                if (_target == null || !_target.gameObject.activeInHierarchy)
+                {
+                    OnTargetLost?.Invoke();
+                    break;
+                }
+
+                float distance = Vector2.Distance(transform.position, _target.position);
                 if (distance <= _reachingThreshold)
                 {
                     OnTargetReached?.Invoke(_target);
                 }
+
                 transform.position = Vector2.MoveTowards(
                     transform.position,
                     _target.position,
@@ -58,11 +66,9 @@ public class MoveComponent : MonoBehaviour
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
         }
-        catch (OperationCanceledException)
-        {
-
-        }
+        catch (OperationCanceledException) { }
     }
+
 
     private void OnDestroy()
     {

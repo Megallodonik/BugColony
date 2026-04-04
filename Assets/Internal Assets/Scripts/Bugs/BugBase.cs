@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 public abstract class BugBase: MonoBehaviour, IDamageble 
 {
@@ -12,8 +13,8 @@ public abstract class BugBase: MonoBehaviour, IDamageble
 
     private MoveComponent _moveComponent;
 
-    private int _saturation;
-    private int _health;
+    protected int _saturation;
+    protected int _health;
 
     private bool _followRepetative = false;
 
@@ -21,15 +22,22 @@ public abstract class BugBase: MonoBehaviour, IDamageble
     public int Saturation => _saturation;
     public int Health => _health;
 
-    public virtual void Init(BugBaseConfigScriptableObject config)
+    public virtual async void Init(BugBaseConfigScriptableObject config)
     {
         _config = config;
+        _health = config.Health;
+        _saturation = 0;
         _moveComponent = this.GetComponent<MoveComponent>();
+        _moveComponent.StopFollowing();
         _moveComponent.OnTargetReached += OnTargetReached;
+        _moveComponent.OnTargetLost += OnTargetLost;
+        await UniTask.Delay(config.AppearenceDelayInSeconds * 1000);
+        StartChase(config.SeekForTargetRepetative);
     }
     private void OnDestroy()
     {
-        _moveComponent.OnTargetReached -= OnTargetReached;
+        //_moveComponent.OnTargetLost -= OnTargetLost;
+        //_moveComponent.OnTargetReached -= OnTargetReached;
     }
 
     public void Interact()
@@ -54,7 +62,10 @@ public abstract class BugBase: MonoBehaviour, IDamageble
     {
         _saturation += amount;
     } 
-
+    protected virtual void OnTargetLost()
+    {
+        StartChase(_config.SeekForTargetRepetative);
+    }
     protected virtual void OnTargetReached(Transform target)
     {
         var entity = target.GetComponent<IEntity>();
@@ -95,7 +106,7 @@ public abstract class BugBase: MonoBehaviour, IDamageble
         for (int i = 0; i < results.Length; i++)
         {
             var target = results[i];
-            if (target == null || target.GetComponent(targetType) == null) continue;
+            if (target == null || target.GetComponent(targetType) == null || target.gameObject == this.gameObject) continue;
 
             float distSq = (results[i].transform.position - transform.position).sqrMagnitude;
             if (distSq < minDistSq)
