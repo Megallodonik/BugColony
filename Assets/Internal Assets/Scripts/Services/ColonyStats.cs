@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class ColonyStats
 {
+    public event Action OnColonyStatsChange;
     private BugSpawnerService _bugSpawnerService;
 
     private int _workerBugsDead;
@@ -33,9 +35,12 @@ public class ColonyStats
             case WorkerBug w:
                 _workerBugsAlive += 1;
                 break;
-
+            case PredatorBug pred:
+                _predatorBugsAlive += 1;
+                break;
         }
         _bugsAlive += 1;
+        OnColonyStatsChange?.Invoke();
     }
     private void OnBugReturned(BugBase bug)
     {
@@ -45,9 +50,14 @@ public class ColonyStats
                 _workerBugsDead += 1;
                 _workerBugsAlive -= 1;
                 break;
+            case PredatorBug pred:
+                _predatorBugsDead += 1;
+                _predatorBugsAlive -= 1;
+                break;
 
         }
         _bugsDead += 1;
         _bugsAlive -= 1;
+        OnColonyStatsChange?.Invoke();
     }
 }

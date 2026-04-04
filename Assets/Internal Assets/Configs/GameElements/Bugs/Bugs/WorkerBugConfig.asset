@@ -24,5 +24,6 @@ MonoBehaviour:
   _reachingThreshold: 0
   _seekForTargetRepetative: 1
   _appearenceDelayInSeconds: 1
+  _separateOnlyInSelfSimilar: 0
   _id: worker_bug
-  _saturationForSeparation: 10
+  _saturationForSeparation: 20

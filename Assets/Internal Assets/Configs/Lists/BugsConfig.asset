@@ -17,10 +17,10 @@ MonoBehaviour:
   - _bugView: {fileID: 932387300267249661, guid: 1db976d35e3b001468af0a690448cb00, type: 3}
     _bugData: {fileID: 11400000, guid: ab9bdbae3b038154287419418127b074, type: 2}
     _maxBugsOnScene: 100
-    _bugAppearenceOnSeparationWeight: 50
+    _bugAppearenceOnSeparationWeight: 90
     _totalAmountOfBugsToStartSpawning: 0
   - _bugView: {fileID: 7923794734266176752, guid: 5c2f4101aa45b3841b36be6ec8f8c858, type: 3}
     _bugData: {fileID: 11400000, guid: 8b7ea985e677b0b4ca9554c138de80a9, type: 2}
     _maxBugsOnScene: 100
-    _bugAppearenceOnSeparationWeight: 50
-    _totalAmountOfBugsToStartSpawning: 2
+    _bugAppearenceOnSeparationWeight: 10
+    _totalAmountOfBugsToStartSpawning: 10
